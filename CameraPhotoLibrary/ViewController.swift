@@ -38,8 +38,8 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
             
             imagePicker.delegate = self
             imagePicker.sourceType = .photoLibrary
-            imagePicker.mediaTypes = [UTType.image.identifier as String]
-            imagePicker.allowsEditing = true
+            imagePicker.mediaTypes = [UTType.image.identifier as String] //kUTTypeImage 사용 부라
+            imagePicker.allowsEditing = true //편집 허용
             
             present(imagePicker, animated: true, completion: nil)
         } else {
@@ -47,7 +47,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         }
     }
     
-    
+    //비디오 촬영
     @IBAction func btnRecordVideoFromCamera(_ sender: UIButton) {
         //카메라의 사용 가능 여부를 확인. 사용 가능할 때~
         if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
@@ -64,6 +64,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         }
     }
     
+    //비디오 불러오기
     @IBAction func btnLoadVideoFromLibrary(_ sender: UIButton) {
         if (UIImagePickerController.isSourceTypeAvailable(.photoLibrary)) {
             flagImageSave = false
@@ -85,25 +86,31 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
+    
     //사진이나 비디오를 촬영하거나 포토 라이브러리에서 선택이 끝났을 떄 호출되는 함수
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        //미디어 종류 확인
         let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! NSString
         
-        if mediaType.isEqual(to: UTType.image.identifier as NSString as String) {
+        if mediaType.isEqual(to: UTType.image.identifier as NSString as String) { //미디어 종류가 사진일 경우
+            //사진을 가져와 저장한다
             captureImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+            
+            
             if flagImageSave {
                 UIImageWriteToSavedPhotosAlbum(captureImage, self, nil, nil)
             }
             
             imgView.image = captureImage
-        } else if mediaType.isEqual(to: UTType.movie.identifier  as NSString as String) {
+        } else if mediaType.isEqual(to: UTType.movie.identifier  as NSString as String) { //미디어 종류가 비디오라면
+            //이미지가 저장된 상태라면 가져온 동영상을 포토 라이브에 저장한다.
             if flagImageSave {
                 videoURL = (info[UIImagePickerController.InfoKey.mediaURL] as! URL)
                 
                 UISaveVideoAtPathToSavedPhotosAlbum(videoURL.relativePath, self, nil, nil)
             }
         }
-        
+        //현재의 뷰 컨트롤러를 제거한다. 뷰에서 이미 피커 화면을 제거하여 초기 뷰를 보여준다.
         self.dismiss(animated: true, completion: nil)
     }
     

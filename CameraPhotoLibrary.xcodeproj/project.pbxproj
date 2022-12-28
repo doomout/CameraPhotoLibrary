@@ -42,6 +42,7 @@
 		ADEFE40C295BE7F30010CF0F = {
 			isa = PBXGroup;
 			children = (
+				ADEFE42C295BEBAA0010CF0F /* README.md */,
 				ADEFE417295BE7F30010CF0F /* CameraPhotoLibrary */,
 				ADEFE416295BE7F30010CF0F /* Products */,
 			);
@@ -65,7 +66,6 @@
 				ADEFE421295BE7F40010CF0F /* Assets.xcassets */,
 				ADEFE423295BE7F40010CF0F /* LaunchScreen.storyboard */,
 				ADEFE426295BE7F40010CF0F /* Info.plist */,
-				ADEFE42C295BEBAA0010CF0F /* README.md */,
 			);
 			path = CameraPhotoLibrary;
 			sourceTree = "<group>";
